@@ -7,6 +7,8 @@ import customModule from './custom';
 
 import qaExtension from '../resources/qa';
 
+import resizeTask from 'bpmn-js-task-resize/lib';
+
 const HIGH_PRIORITY = 1500;
 
 const containerEl = document.getElementById('container'),
@@ -18,26 +20,30 @@ const containerEl = document.getElementById('container'),
       warningEl = document.getElementById('warning');
 
 // hide quality assurance if user clicks outside
-window.addEventListener('click', (event) => {
-  const { target } = event;
+// window.addEventListener('click', (event) => {
+//   const { target } = event;
 
-  if (target === qualityAssuranceEl || qualityAssuranceEl.contains(target)) {
-    return;
-  }
+//   if (target === qualityAssuranceEl || qualityAssuranceEl.contains(target)) {
+//     return;
+//   }
 
-  qualityAssuranceEl.classList.add('hidden');
-});
+//   qualityAssuranceEl.classList.add('hidden');
+// });
 
 // create modeler
 const bpmnModeler = new BpmnModeler({
   container: containerEl,
   additionalModules: [
-    customModule
+    customModule,
+    resizeTask
   ],
   moddleExtensions: {
     qa: qaExtension
-  }
+  },
+  taskResizingEnabled: true
 });
+
+window.bpmnModeler = bpmnModeler;
 
 // import XML
 bpmnModeler.importXML(diagramXML, (err) => {
@@ -67,72 +73,72 @@ bpmnModeler.importXML(diagramXML, (err) => {
   }
 
   // open quality assurance if user right clicks on element
-  bpmnModeler.on('element.contextmenu', HIGH_PRIORITY, (event) => {
-    event.originalEvent.preventDefault();
-    event.originalEvent.stopPropagation();
+  // bpmnModeler.on('element.contextmenu', HIGH_PRIORITY, (event) => {
+  //   event.originalEvent.preventDefault();
+  //   event.originalEvent.stopPropagation();
 
-    qualityAssuranceEl.classList.remove('hidden');
+  //   qualityAssuranceEl.classList.remove('hidden');
 
-    ({ element } = event);
+  //   ({ element } = event);
   
-    // ignore root element
-    if (!element.parent) {
-      return;
-    }
+  //   // ignore root element
+  //   if (!element.parent) {
+  //     return;
+  //   }
 
-    businessObject = getBusinessObject(element);
+  //   businessObject = getBusinessObject(element);
   
-    let { suitable } = businessObject;
+  //   let { suitable } = businessObject;
     
-    suitabilityScoreEl.value = suitable ? suitable : '';
+  //   suitabilityScoreEl.value = suitable ? suitable : '';
 
-    suitabilityScoreEl.focus();
+  //   suitabilityScoreEl.focus();
 
-    analysisDetails = getExtensionElement(businessObject, 'qa:AnalysisDetails');
+  //   analysisDetails = getExtensionElement(businessObject, 'qa:AnalysisDetails');
 
-    lastCheckedEl.textContent = analysisDetails ? analysisDetails.lastChecked : '-';
+  //   lastCheckedEl.textContent = analysisDetails ? analysisDetails.lastChecked : '-';
 
-    validate();
-  });
+  //   validate();
+  // });
 
   // set suitability core and last checked if user submits
-  formEl.addEventListener('submit', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  // formEl.addEventListener('submit', (event) => {
+  //   event.preventDefault();
+  //   event.stopPropagation();
 
-    suitabilityScore = Number(suitabilityScoreEl.value);
+  //   suitabilityScore = Number(suitabilityScoreEl.value);
 
-    if (isNaN(suitabilityScore)) {
-      return;
-    }
+  //   if (isNaN(suitabilityScore)) {
+  //     return;
+  //   }
 
-    const extensionElements = businessObject.extensionElements || moddle.create('bpmn:ExtensionElements');
+  //   const extensionElements = businessObject.extensionElements || moddle.create('bpmn:ExtensionElements');
 
-    if (!analysisDetails) {
-      analysisDetails = moddle.create('qa:AnalysisDetails');
+  //   if (!analysisDetails) {
+  //     analysisDetails = moddle.create('qa:AnalysisDetails');
 
-      extensionElements.get('values').push(analysisDetails);
-    }
+  //     extensionElements.get('values').push(analysisDetails);
+  //   }
 
-    analysisDetails.lastChecked = new Date().toISOString();
+  //   analysisDetails.lastChecked = new Date().toISOString();
 
-    modeling.updateProperties(element, {
-      extensionElements,
-      suitable: suitabilityScore
-    });
+  //   modeling.updateProperties(element, {
+  //     extensionElements,
+  //     suitable: suitabilityScore
+  //   });
 
-    qualityAssuranceEl.classList.add('hidden');
-  });
+  //   qualityAssuranceEl.classList.add('hidden');
+  // });
 
-  // close quality assurance if user presses escape
-  formEl.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      qualityAssuranceEl.classList.add('hidden');
-    }
-  });
+  // // close quality assurance if user presses escape
+  // formEl.addEventListener('keydown', (event) => {
+  //   if (event.key === 'Escape') {
+  //     qualityAssuranceEl.classList.add('hidden');
+  //   }
+  // });
 
   // validate suitability score if user inputs value
-  suitabilityScoreEl.addEventListener('input', validate);
+  // suitabilityScoreEl.addEventListener('input', validate);
 
 });
 

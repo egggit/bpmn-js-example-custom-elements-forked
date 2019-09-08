@@ -37,6 +37,48 @@ html, body, #container {
   color: #52B415 !important;
 }
 
+.bpmn-icon-task.leon {
+  background-image: url('https://secure.img1-fg.wfcdn.com/im/98270403/resize-h800-w800%5Ecompr-r85/8470/84707680/Pokemon+Pikachu+Wall+Decal.jpg');
+  background-repeat: no-repeat;
+}
+
+.icon-custom-ironman {
+  background: url('../image/ironman.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.icon-custom-superman {
+  background: url('../image/superman.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.icon-custom-batman {
+  background: url('../image/batman.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.icon-save {
+  background: url('../image/icon-save.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.icon-load {
+  background: url('../image/icon-load.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.icon-clear {
+  background: url('../image/icon-clear.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+
 #quality-assurance {
   color: #111;
   left: 50%;

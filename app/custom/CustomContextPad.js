@@ -25,12 +25,15 @@ export default class CustomContextPad {
       translate
     } = this;
 
-    function appendServiceTask(suitabilityScore) {
+    function appendServiceTask(suitabilityScore, shapeType) {
       return function(event, element) {
         if (autoPlace) {
           const businessObject = bpmnFactory.create('bpmn:Task');
     
           businessObject.suitable = suitabilityScore;
+          if (shapeType) {
+            businessObject.shapeType = shapeType;
+          }
     
           const shape = elementFactory.createShape({
             type: 'bpmn:Task',
@@ -44,11 +47,14 @@ export default class CustomContextPad {
       }
     }
 
-    function appendServiceTaskStart(suitabilityScore) {
+    function appendServiceTaskStart(suitabilityScore, shapeType) {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:Task');
 
         businessObject.suitable = suitabilityScore;
+        if (shapeType) {
+          businessObject.shapeType = shapeType;
+        }
 
         const shape = elementFactory.createShape({
           type: 'bpmn:Task',
@@ -60,33 +66,60 @@ export default class CustomContextPad {
     }
 
     return {
-      'append.low-task': {
+      // 'append.low-task': {
+      //   group: 'model',
+      //   className: 'bpmn-icon-task red',
+      //   title: translate('Append Task with low suitability score'),
+      //   action: {
+      //     click: appendServiceTask(SUITABILITY_SCORE_LOW),
+      //     dragstart: appendServiceTaskStart(SUITABILITY_SCORE_LOW)
+      //   }
+      // },
+      // 'append.average-task': {
+      //   group: 'model',
+      //   className: 'bpmn-icon-task yellow',
+      //   title: translate('Append Task with average suitability score'),
+      //   action: {
+      //     click: appendServiceTask(SUITABILITY_SCORE_AVERGE),
+      //     dragstart: appendServiceTaskStart(SUITABILITY_SCORE_AVERGE)
+      //   }
+      // },
+      // 'append.high-task': {
+      //   group: 'model',
+      //   className: 'bpmn-icon-task green',
+      //   title: translate('Append Task with high suitability score'),
+      //   action: {
+      //     click: appendServiceTask(SUITABILITY_SCORE_HIGH),
+      //     dragstart: appendServiceTaskStart(SUITABILITY_SCORE_HIGH)
+      //   }
+      // },
+      'append.ironman-task': {
         group: 'model',
-        className: 'bpmn-icon-task red',
-        title: translate('Append Task with low suitability score'),
+        className: 'icon-custom-ironman',
+        title: translate('ironman'),
         action: {
-          click: appendServiceTask(SUITABILITY_SCORE_LOW),
-          dragstart: appendServiceTaskStart(SUITABILITY_SCORE_LOW)
+          click: appendServiceTask(200, 'ironman'),
+          dragstart: appendServiceTaskStart(200, 'ironman')
         }
       },
-      'append.average-task': {
+      'append.superman-task': {
         group: 'model',
-        className: 'bpmn-icon-task yellow',
-        title: translate('Append Task with average suitability score'),
+        className: 'icon-custom-superman',
+        title: translate('superman'),
         action: {
-          click: appendServiceTask(SUITABILITY_SCORE_AVERGE),
-          dragstart: appendServiceTaskStart(SUITABILITY_SCORE_AVERGE)
+          click: appendServiceTask(200, 'superman'),
+          dragstart: appendServiceTaskStart(200, 'superman')
         }
       },
-      'append.high-task': {
+      'append.batman-task': {
         group: 'model',
-        className: 'bpmn-icon-task green',
-        title: translate('Append Task with high suitability score'),
+        className: 'icon-custom-batman',
+        title: translate('batman'),
         action: {
-          click: appendServiceTask(SUITABILITY_SCORE_HIGH),
-          dragstart: appendServiceTaskStart(SUITABILITY_SCORE_HIGH)
+          click: appendServiceTask(200, 'batman'),
+          dragstart: appendServiceTaskStart(200, 'batman')
         }
-      }
+      },
     };
   }
 }

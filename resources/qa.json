@@ -16,6 +16,11 @@
           "name": "suitable",
           "isAttr": true,
           "type": "Integer"
+        },
+        {
+          "name": "shapeType",
+          "isAttr": true,
+          "type": "String"
         }
       ]
     },
